@@ -140,11 +140,13 @@ public class LdapAuthenticationProviderImpl implements PasswdAuthenticationProvi
 
   private void applyFilter(DirSearch client, String user) throws AuthenticationException {
     if (filter != null) {
-      if (LdapUtils.hasDomain(user)) {
-        filter.apply(client, LdapUtils.extractUserName(user));
-      } else {
-        filter.apply(client, user);
-      }
+      filter.apply(client, user);
+      // we use email as user name.
+//      if (LdapUtils.hasDomain(user)) {
+//        filter.apply(client, LdapUtils.extractUserName(user));
+//      } else {
+//        filter.apply(client, user);
+//      }
     }
   }
 }

@@ -71,21 +71,22 @@ public final class LdapUtils {
    * <b>Examples:</b>
    * <pre>
    * LdapUtils.extractUserName("UserName")                        = "UserName"
-   * LdapUtils.extractUserName("UserName@mycorp.com")             = "UserName"
+//   * LdapUtils.extractUserName("UserName@mycorp.com")             = "UserName"
    * LdapUtils.extractUserName("cn=UserName,dc=mycompany,dc=com") = "UserName"
    * </pre>
    * @param userDn
    * @return
    */
   public static String extractUserName(String userDn) {
-    if (!isDn(userDn) && !hasDomain(userDn)) {
+    // use email as user name.
+    if (!isDn(userDn) /* && !hasDomain(userDn)*/) {
       return userDn;
     }
 
-    int domainIdx = ServiceUtils.indexOfDomainMatch(userDn);
-    if (domainIdx > 0) {
-      return userDn.substring(0, domainIdx);
-    }
+//    int domainIdx = ServiceUtils.indexOfDomainMatch(userDn);
+//    if (domainIdx > 0) {
+//      return userDn.substring(0, domainIdx);
+//    }
 
     if (userDn.contains("=")) {
       return userDn.substring(userDn.indexOf("=") + 1, userDn.indexOf(","));
@@ -201,7 +202,8 @@ public final class LdapUtils {
    * @return a list of user's principals
    */
   public static List<String> createCandidatePrincipals(HiveConf conf, String user) {
-    if (hasDomain(user) || isDn(user)) {
+    // use email as user name.
+    if (hasDomain(user) /*|| isDn(user)*/) {
       return Collections.singletonList(user);
     }
 

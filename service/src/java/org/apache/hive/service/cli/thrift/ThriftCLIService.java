@@ -448,8 +448,10 @@ public abstract class ThriftCLIService extends AbstractService implements TCLISe
         KerberosNameShim fullKerberosName = ShimLoader.getHadoopShims().getKerberosNameShim(userName);
         ret = fullKerberosName.getShortName();
       } else {
-        int indexOfDomainMatch = ServiceUtils.indexOfDomainMatch(userName);
-        ret = (indexOfDomainMatch <= 0) ? userName : userName.substring(0, indexOfDomainMatch);
+        // use email as user name
+//        int indexOfDomainMatch = ServiceUtils.indexOfDomainMatch(userName);
+//        ret = (indexOfDomainMatch <= 0) ? userName : userName.substring(0, indexOfDomainMatch);
+        ret = userName;
       }
     }
 
